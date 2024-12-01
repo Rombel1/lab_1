@@ -15,69 +15,69 @@ def display_menu():
 
 
 def main():
-    vehicles = []
+    UniversityFactory = []
 
     while True:
         display_menu()
         choice = input("Выберите действие: ")
 
         if choice == "1":
-            vehicle_type = input(
-                "Введите тип транспорта (Car, Bus, Bicycle, Plane, Truck, Ship, Train, MetroTrain, Motorcycle.): "
+            UniversityFactory_type = input(
+                "Введите Факультет (ИИТ, ИЦИС, ИПТИ, ИСТМ): "
             )
-            model = input("Введите название транспорта: ")
-            capacity = int(input("Введите вместимость: "))
+            model = input("Введите название Факультета: ")
+            capacity = int(input("Введите специальность: "))
             try:
-                vehicle = VehicleFactory.create_vehicle(vehicle_type, model, capacity)
-                vehicles.append(vehicle)
-                print("Транспорт добавлен!")
+                UniversityFactory = UniversityFactory.create_vehicle(UniversityFactory_type, model, capacity)
+                UniversityFactory.append(UniversityFactory)
+                print("Факультет добавлен!")
             except InvalidVehicleTypeException as e:
                 print(f"Error: {e}")
 
         elif choice == "2":
             filename = input(
-                "Введите название файла для сохранения транспорта (напр.: vehicles.json): "
+                "Введите название файла для сохранения факультета (напр.: UniversityFactory.json): "
             )
-            VehicleFactory.save_to_json(vehicles, filename)
-            print(f"Транспорт сохренён в {filename}")
+            UniversityFactory.save_to_json(UniversityFactory, filename)
+            print(f"Факультет сохренён в {filename}")
 
         elif choice == "3":
             filename = input(
-                "Введите название файла из которого загрузить транспорт (напр.: vehicles.json): "
+                "Введите название файла из которого загрузить факультет (напр.: UniversityFactory.json): "
             )
             try:
-                loaded_vehicles = VehicleFactory.load_from_json(filename)
+                UniversityFactory = UniversityFactory.load_from_json(filename)
                 vehicles.extend(loaded_vehicles)
                 print(
-                    f"Загружено {len(loaded_vehicles)} Транспортных средств из {filename}"
+                    f"Загружено {len(loaded_vehicles)} Факультет из {filename}"
                 )
             except (FileNotFoundError, json.JSONDecodeError) as e:
-                print(f"Error loading vehicles: {e}")
+                print(f"Error loading UniversityFactory: {e}")
 
         elif choice == "4":
             filename = input(
-                "Введите название файла для сохранения транспорта (напр.: vehicles.xml): "
+                "Введите название файла для сохранения Факультета (напр.: UniversityFactory.xml): "
             )
-            VehicleFactory.save_to_xml(vehicles, filename)
+            UniversityFactory.save_to_xml(UniversityFactory, filename)
             print(f"Транспорт сохранён в {filename}")
 
         elif choice == "5":
             filename = input(
-                "Введите название файла из которого загрузить транспорт (напр.: vehicles.xml): "
+                "Введите название файла из которого загрузить Факултет (напр.: UniversityFactory.xml): "
             )
             try:
-                loaded_vehicles = VehicleFactory.load_from_xml(filename)
-                vehicles.extend(loaded_vehicles)
+                loaded_vehicles = UniversityFactory.load_from_xml(filename)
+                UniversityFactory.extend(loaded_vehicles)
                 print(
-                    f"Загружено {len(loaded_vehicles)} Транспортных средств из {filename}"
+                    f"Загружено {len(UniversityFactory)} Факультет из {filename}"
                 )
             except (FileNotFoundError, ET.ParseError) as e:
-                print(f"Ошибка при загрузке транспорта: {e}")
+                print(f"Ошибка при загрузке факультета: {e}")
 
         elif choice == "6":
-            print("Транспорт:")
-            for vehicle in vehicles:
-                print(vehicle.info())
+            print("факультет:")
+            for UniversityFactory in UniversityFactory:
+                print(UniversityFactory.info())
 
         elif choice == "0":
             print("Выход...")
