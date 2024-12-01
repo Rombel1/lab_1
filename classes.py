@@ -1,91 +1,26 @@
-import json
-from UniversityFactory import UniversityFactory
-from exceptions import InvalidVehicleTypeException
-import xml.etree.ElementTree as ET
+class UniversityFactory:  # Создан базовый класс Университета
+    def __init__(self, name, capacity) -> None:
+        self.name = name
+        self.capacity = capacity
 
+    def activate(self) -> None:
+        print(f"{self.name} Двигается.")
 
-def display_menu():
-    print("1. Добавить факультет университета")
-    print("2. Сохранить факультет в файл json")
-    print("3. Загрузить факультет из файла json")
-    print("4. Сохранить факультет в файл xml")
-    print("5. Загрузить факультет из файла xml")
-    print("6. Вывести на экран текущие тфакультеты")
-    print("0. Выход")
+    def info(self) -> str:
+        return f"Название: {self.name}, Факультет: {self.capacity} "
 
+    def to_dict(self):
+        return {
+            "type": self.__class__.__name__,
+            "name": self.name,
+            "capacity": self.capacity,
+        }
 
-def main():
-    vehicles = []
+class University:
+    def __init__(self, type, name, year):
+        self.type = type
+        self.name = name
+        self.year = year
 
-    while True:
-        display_menu()
-        choice = input("Выберите действие: ")
-
-        if choice == "1":
-            vehicle_type = input(
-                "Введите Факультет (ИИТ, ИЦИС, ИПТИ, ИСТМ): "
-            )
-            model = input("Введите название Факультета: ")
-            capacity = int(input("Введите специальность: "))
-            try:
-                vehicle = UniversityFactory.create_vehicle(vehicle_type, model, capacity)
-                vehicles.append(vehicle)
-                print("Факультет добавлен!")
-            except InvalidVehicleTypeException as e:
-                print(f"Error: {e}")
-
-        elif choice == "2":
-            filename = input(
-                "Введите название файла для сохранения факультета (напр.: UniversityFactory.json): "
-            )
-            UniversityFactory.save_to_json(UniversityFactory, filename)
-            print(f"Факультет сохренён в {filename}")
-
-        elif choice == "3":
-            filename = input(
-                "Введите название файла из которого загрузить факультет (напр.: UniversityFactory.json): "
-            )
-            try:
-                UniversityFactory = UniversityFactory.load_from_json(filename)
-                vehicles.extend(loaded_vehicles)
-                print(
-                    f"Загружено {len(loaded_vehicles)} Факультет из {filename}"
-                )
-            except (FileNotFoundError, json.JSONDecodeError) as e:
-                print(f"Error loading UniversityFactory: {e}")
-
-        elif choice == "4":
-            filename = input(
-                "Введите название файла для сохранения Факультета (напр.: UniversityFactory.xml): "
-            )
-            UniversityFactory.save_to_xml(UniversityFactory, filename)
-            print(f"Транспорт сохранён в {filename}")
-
-        elif choice == "5":
-            filename = input(
-                "Введите название файла из которого загрузить Факултет (напр.: UniversityFactory.xml): "
-            )
-            try:
-                loaded_vehicles = UniversityFactory.load_from_xml(filename)
-                UniversityFactory.extend(loaded_vehicles)
-                print(
-                    f"Загружено {len(UniversityFactory)} Факультет из {filename}"
-                )
-            except (FileNotFoundError, ET.ParseError) as e:
-                print(f"Ошибка при загрузке факультета: {e}")
-
-        elif choice == "6":
-            print("факультет:")
-            for UniversityFactory in UniversityFactory:
-                print(UniversityFactory.info())
-
-        elif choice == "0":
-            print("Выход...")
-            break
-
-        else:
-            print("Неверный выбор. Попробуйте ещё раз")
-
-
-if __name__ == "__main__":
-    main()
+    def info(self):
+        return f"Тип: {self.type}, Название: {self.name}, Год создания: {self.year}"
