@@ -1,4 +1,4 @@
-class InvalidVehicleTypeException(
+class InvalidUniversityTypeException(
     Exception
 ):  # Исключение возникающее при выборе неверного типа транспорта
     def __init__(self, vehicle_type):
